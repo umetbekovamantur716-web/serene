@@ -1,0 +1,985 @@
+<html lang="ky">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Көк-Жайлоо — Боз үй эс алуу жайы</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+          display: ['Playfair Display', 'serif']
+        },
+        colors: {
+          brand: {
+            50:  '#f6f8f1',
+            100: '#e8eddc',
+            200: '#c9d4b0',
+            300: '#a3b47c',
+            400: '#7f9556',
+            500: '#5f7a3f',
+            600: '#4a6230',
+            700: '#384b25',
+            800: '#263419',
+            900: '#161f0f'
+          },
+          earth: {
+            50:  '#fbf6ee',
+            100: '#f2e5cf',
+            200: '#e1c69c',
+            300: '#cda36a',
+            400: '#b8854a',
+            500: '#936834',
+            600: '#704f27',
+            700: '#50391c',
+            800: '#332514',
+            900: '#1a130b'
+          }
+        },
+        animation: {
+          'fade-up': 'fadeUp 0.8s ease-out forwards',
+          'slow-bounce': 'bounce 3s infinite'
+        },
+        keyframes: {
+          fadeUp: {
+            '0%': { opacity: 0, transform: 'translateY(30px)' },
+            '100%': { opacity: 1, transform: 'translateY(0)' }
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fbf6ee;
+    color: #1a130b;
+    -webkit-font-smoothing: antialiased;
+  }
+  .font-display { font-family: 'Playfair Display', serif; }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #f2e5cf; }
+  ::-webkit-scrollbar-thumb { background: #5f7a3f; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #4a6230; }
+
+  /* Slider */
+  .hero-slider { position: relative; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    background-size: cover;
+    background-position: center;
+  }
+  .slide.active { opacity: 1; }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Card hover */
+  .card-hover { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 50px -12px rgba(38, 52, 25, 0.25);
+  }
+
+  /* Gradient text */
+  .grad-text {
+    background: linear-gradient(135deg, #e1c69c 0%, #5f7a3f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Product select ring */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; margin: 0;
+  }
+  input[type="number"] { -moz-appearance: textfield; }
+
+  /* Floating whatsapp button */
+  .fab {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 60;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+    font-size: 28px;
+    animation: pulseGlow 2.2s infinite;
+  }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5); }
+    50% { box-shadow: 0 10px 35px rgba(37, 211, 102, 0.85); }
+  }
+
+  /* Mobile nav open state */
+  .mobile-nav { transform: translateY(-110%); transition: transform 0.4s ease; }
+  .mobile-nav.open { transform: translateY(0); }
+
+  /* Pattern overlay */
+  .pattern {
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(95, 122, 63, 0.12) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  /* Checkbox card */
+  .sel-card {
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+  }
+  .sel-card.selected {
+    border-color: #5f7a3f;
+    background: #e8eddc;
+    transform: scale(1.02);
+  }
+
+  /* Marquee */
+  @keyframes slide-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: slide-x 30s linear infinite;
+    width: max-content;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- HEADER -->
+<header id="top" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/70 border-b border-brand-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+    <a href="#top" class="flex items-center gap-2">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-700 flex items-center justify-center text-white shadow-md">
+        <i class="fa-solid fa-mountain-sun"></i>
+      </div>
+      <div class="leading-tight">
+        <div class="font-display font-bold text-lg text-brand-800">Көк-Жайлоо</div>
+        <div class="text-[10px] tracking-widest uppercase text-brand-500 -mt-1">Эс алуу жайы</div>
+      </div>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-brand-800">
+      <a href="#about"    class="hover:text-brand-500 transition">Жөнүндө</a>
+      <a href="#yurts"    class="hover:text-brand-500 transition">Боз үйлөр</a>
+      <a href="#services" class="hover:text-brand-500 transition">Кызматтар</a>
+      <a href="#products" class="hover:text-brand-500 transition">Азыктар</a>
+      <a href="#gallery"  class="hover:text-brand-500 transition">Галерея</a>
+      <a href="#booking"  class="hover:text-brand-500 transition">Бронь</a>
+      <a href="#booking"  class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-full shadow-md transition">Бронь кылуу</a>
+    </nav>
+
+    <button id="burger" class="lg:hidden text-2xl text-brand-800" aria-label="Меню">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile nav -->
+  <div id="mobileNav" class="mobile-nav lg:hidden absolute top-16 left-0 right-0 bg-white shadow-xl border-b border-brand-100">
+    <nav class="flex flex-col px-6 py-4 gap-3 text-brand-800 font-medium">
+      <a href="#about"    class="py-2 border-b border-brand-50">Жөнүндө</a>
+      <a href="#yurts"    class="py-2 border-b border-brand-50">Боз үйлөр</a>
+      <a href="#services" class="py-2 border-b border-brand-50">Кызматтар</a>
+      <a href="#products" class="py-2 border-b border-brand-50">Азыктар</a>
+      <a href="#gallery"  class="py-2 border-b border-brand-50">Галерея</a>
+      <a href="#booking"  class="py-2 border-b border-brand-50">Бронь</a>
+      <a href="#booking"  class="mt-2 text-center bg-brand-500 text-white py-3 rounded-full">Бронь кылуу</a>
+      <div class="flex justify-center gap-6 py-3 text-2xl text-brand-600">
+        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/996555000000" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO SLIDER -->
+<section class="hero-slider h-[100vh] min-h-[640px] relative">
+  <div class="slide active" style="background-image: linear-gradient(rgba(22,31,15,.45), rgba(22,31,15,.65)), url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1920&q=80');">
+    <div class="absolute inset-0 flex items-center">
+      <div class="max-w-7xl mx-auto px-6 w-full text-white">
+        <span class="inline-block px-4 py-1 bg-white/15 backdrop-blur rounded-full text-xs tracking-[0.2em] uppercase mb-5 border border-white/25">Таза аба · Тоолор · Чыныгы эс алуу</span>
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight max-w-3xl">Тоодогун <span class="grad-text">боз үй</span> эс алуусу</h1>
+        <p class="mt-5 max-w-xl text-white/85 text-base sm:text-lg">Бири-биринен алыс жайгашкан 8 боз үй, шаркыратма жана нукура табият. Шаардын ызы-чуусунан качып, чоңдордой эс алыңыз.</p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a href="#booking" class="bg-earth-300 hover:bg-earth-400 text-brand-900 font-semibold px-7 py-4 rounded-full shadow-lg transition">
+            <i class="fa-solid fa-calendar-check mr-2"></i> Азыр бронь кылуу
+          </a>
+          <a href="#about" class="border border-white/60 hover:bg-white/10 text-white font-semibold px-7 py-4 rounded-full transition">
+            <i class="fa-regular fa-circle-play mr-2"></i> Кененирээк
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide" style="background-image: linear-gradient(rgba(22,31,15,.45), rgba(22,31,15,.65)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');">
+    <div class="absolute inset-0 flex items-center">
+      <div class="max-w-7xl mx-auto px-6 w-full text-white">
+        <span class="inline-block px-4 py-1 bg-white/15 backdrop-blur rounded-full text-xs tracking-[0.2em] uppercase mb-5 border border-white/25">Шаркыратмага 10 мүнөт</span>
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight max-w-3xl">Шаркыратманын <span class="grad-text">үндөрү</span></h1>
+        <p class="mt-5 max-w-xl text-white/85 text-base sm:text-lg">Жакынкы шаркыратмага жөө жетип, жаратылыш менен жекеме-жеке калыңыз.</p>
+        <div class="mt-8">
+          <a href="#waterfall" class="bg-earth-300 hover:bg-earth-400 text-brand-900 font-semibold px-7 py-4 rounded-full shadow-lg transition">
+            <i class="fa-solid fa-water mr-2"></i> Шаркыратма тууралуу
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide" style="background-image: linear-gradient(rgba(22,31,15,.45), rgba(22,31,15,.65)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80');">
+    <div class="absolute inset-0 flex items-center">
+      <div class="max-w-7xl mx-auto px-6 w-full text-white">
+        <span class="inline-block px-4 py-1 bg-white/15 backdrop-blur rounded-full text-xs tracking-[0.2em] uppercase mb-5 border border-white/25">Мангал · Волейбол · Кухня</span>
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight max-w-3xl">Шашлык жана <span class="grad-text">достор</span></h1>
+        <p class="mt-5 max-w-xl text-white/85 text-base sm:text-lg">Даяр мангал, от, шампур — баары бар. Сиздин милдетиңиз — эт жана маанай.</p>
+        <div class="mt-8">
+          <a href="#services" class="bg-earth-300 hover:bg-earth-400 text-brand-900 font-semibold px-7 py-4 rounded-full shadow-lg transition">
+            <i class="fa-solid fa-fire mr-2"></i> Кызматтарды көрүү
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide indicators -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+    <button class="slide-dot w-10 h-1.5 rounded-full bg-white/80 active" data-i="0"></button>
+    <button class="slide-dot w-10 h-1.5 rounded-full bg-white/40" data-i="1"></button>
+    <button class="slide-dot w-10 h-1.5 rounded-full bg-white/40" data-i="2"></button>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 right-6 text-white/80 text-xs tracking-widest uppercase hidden sm:flex flex-col items-center gap-2">
+    <span class="rotate-90 translate-y-8">Scroll</span>
+    <i class="fa-solid fa-chevron-down animate-slow-bounce mt-12"></i>
+  </div>
+</section>
+
+<!-- Marquee features -->
+<section class="bg-brand-700 text-earth-50 py-5 overflow-hidden border-y border-brand-600">
+  <div class="marquee-track text-sm uppercase tracking-[0.25em] font-medium">
+    <span><i class="fa-solid fa-mountain mr-2"></i>Тоо абасы</span>
+    <span><i class="fa-solid fa-tent mr-2"></i>8 боз үй</span>
+    <span><i class="fa-solid fa-water mr-2"></i>Шаркыратма</span>
+    <span><i class="fa-solid fa-fire mr-2"></i>Мангал</span>
+    <span><i class="fa-solid fa-volleyball mr-2"></i>Волейбол</span>
+    <span><i class="fa-solid fa-utensils mr-2"></i>Кухня</span>
+    <span><i class="fa-solid fa-wifi mr-2"></i>WiFi</span>
+    <span><i class="fa-solid fa-jar mr-2"></i>Нукура бал</span>
+    <!-- duplicate -->
+    <span><i class="fa-solid fa-mountain mr-2"></i>Тоо абасы</span>
+    <span><i class="fa-solid fa-tent mr-2"></i>8 боз үй</span>
+    <span><i class="fa-solid fa-water mr-2"></i>Шаркыратма</span>
+    <span><i class="fa-solid fa-fire mr-2"></i>Мангал</span>
+    <span><i class="fa-solid fa-volleyball mr-2"></i>Волейбол</span>
+    <span><i class="fa-solid fa-utensils mr-2"></i>Кухня</span>
+    <span><i class="fa-solid fa-wifi mr-2"></i>WiFi</span>
+    <span><i class="fa-solid fa-jar mr-2"></i>Нукура бал</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-20 sm:py-28 bg-earth-50 pattern">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <span class="text-brand-500 uppercase tracking-[0.25em] text-xs font-semibold">Жайлоо жөнүндө</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-bold text-brand-800 mt-3 leading-tight">Жүрөгүңүз тынчыган жер.</h2>
+        <p class="mt-5 text-brand-800/80 leading-relaxed">
+          «Көк-Жайлоо» — тоонун арасында жайгашкан кичинекей жана жылуу эс алуу жайы. Бизде 8 боз үй бири-биринен алыс коюлган: ар биринин жаны өзүңүздүн дүйнөңүз болот. Шаркыратмага чейин 10 мүнөт жөө жол. Интернеттен эс алып, бирок WiFi керек болсо — сатып алып колдоносуз.
+        </p>
+        <p class="mt-4 text-brand-800/80 leading-relaxed">
+          Тамакты өзүңүз жасап же бизге тапшыра аласыз. Азыктарды жергиликтүү айылдан сатып алсаңыз болот: кымыз, айран, сүзмө, курут, бал — баары нукура, кошулмасыз.
+        </p>
+
+        <div class="grid grid-cols-2 gap-4 mt-8">
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-brand-100 reveal">
+            <div class="text-3xl font-display font-bold text-brand-600">8</div>
+            <div class="text-sm text-brand-700 mt-1">Боз үй</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-brand-100 reveal">
+            <div class="text-3xl font-display font-bold text-brand-600">2</div>
+            <div class="text-sm text-brand-700 mt-1">Чоң тапчан</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-brand-100 reveal">
+            <div class="text-3xl font-display font-bold text-brand-600">10 <span class="text-lg">мин</span></div>
+            <div class="text-sm text-brand-700 mt-1">Шаркыратмага</div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-brand-100 reveal">
+            <div class="text-3xl font-display font-bold text-brand-600">24/7</div>
+            <div class="text-sm text-brand-700 mt-1">Таза аба</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative reveal">
+        <div class="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
+          <img src="https://images.unsplash.com/photo-1518235925204-2ecab1f05e4e?auto=format&fit=crop&w=900&q=80" alt="Боз үй" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl border border-brand-100 max-w-[230px] hidden sm:block">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-brand-100 flex items-center justify-center text-brand-600"><i class="fa-solid fa-leaf"></i></div>
+            <div class="text-xs font-semibold text-brand-800">Эко-таза аймак<br><span class="text-brand-500 font-normal">Эч кандай пластик</span></div>
+          </div>
+        </div>
+        <div class="absolute -top-4 -right-4 bg-brand-600 text-white rounded-2xl px-5 py-4 shadow-xl">
+          <div class="text-xs uppercase tracking-widest opacity-80">Rating</div>
+          <div class="font-display text-2xl font-bold mt-1">★ 4.9</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YURTS -->
+<section id="yurts" class="py-20 sm:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-12 reveal">
+      <div>
+        <span class="text-brand-500 uppercase tracking-[0.25em] text-xs font-semibold">Боз үйлөр</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-bold text-brand-800 mt-3">Жылуу, кенен, тынч.</h2>
+        <p class="mt-4 max-w-xl text-brand-700/80">Ар бир боз үй жекеме-жеке коюлган. Ичине төшөк, жууркан, стол, отургуч, жарык камтылган.</p>
+      </div>
+      <div class="bg-earth-100 rounded-2xl p-5 border border-earth-200 max-w-sm">
+        <div class="text-xs uppercase tracking-widest text-earth-600 font-semibold">Минималдуу мөөнөт</div>
+        <div class="font-display text-2xl font-bold text-earth-800 mt-1">2 сааттан</div>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6" id="yurtGrid"></div>
+  </div>
+</section>
+
+<!-- TOPCHAN -->
+<section id="topchan" class="py-16 sm:py-20 bg-earth-50 pattern">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 grid sm:grid-cols-2 gap-6">
+    <div class="bg-white rounded-3xl overflow-hidden shadow-md border border-brand-100 card-hover reveal" data-bookable="topchan" data-name="Тапчан №1" data-price-hour="100" data-price-day="1200">
+      <div class="aspect-[16/10] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover" alt="Тапчан">
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-2xl font-bold text-brand-800">Тапчан №1</h3>
+          <span class="bg-brand-100 text-brand-700 text-xs px-3 py-1 rounded-full font-semibold">Ачык абада</span>
+        </div>
+        <p class="text-brand-700/80 mt-2 text-sm">Көлөкөдөгү чоң тапчан. Көрпөчө менен жабдылган.</p>
+        <div class="grid grid-cols-2 gap-3 mt-5">
+          <div class="bg-brand-50 rounded-xl p-3">
+            <div class="text-[10px] uppercase tracking-widest text-brand-500 font-semibold">Саатына</div>
+            <div class="font-display text-xl font-bold text-brand-700 mt-1">100 сом</div>
+          </div>
+          <div class="bg-brand-50 rounded-xl p-3">
+            <div class="text-[10px] uppercase tracking-widest text-brand-500 font-semibold">Суткасына</div>
+            <div class="font-display text-xl font-bold text-brand-700 mt-1">1200 сом</div>
+          </div>
+        </div>
+        <a href="#booking" class="mt-5 inline-flex items-center justify-center w-full bg-brand-500 hover:bg-brand-600 text-white py-3 rounded-full font-semibold transition">
+          <i class="fa-solid fa-check mr-2"></i> Тандалуу жана бронь
+        </a>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl overflow-hidden shadow-md border border-brand-100 card-hover reveal" data-bookable="topchan" data-name="Тапчан №2" data-price-hour="120" data-price-day="1400">
+      <div class="aspect-[16/10] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1519974719765-e6559eac2575?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover" alt="Тапчан">
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-2xl font-bold text-brand-800">Тапчан №2</h3>
+          <span class="bg-brand-100 text-brand-700 text-xs px-3 py-1 rounded-full font-semibold">Көлөкөдө</span>
+        </div>
+        <p class="text-brand-700/80 mt-2 text-sm">Чоңураак, үй-бүлө же чоң компания үчүн.</p>
+        <div class="grid grid-cols-2 gap-3 mt-5">
+          <div class="bg-brand-50 rounded-xl p-3">
+            <div class="text-[10px] uppercase tracking-widest text-brand-500 font-semibold">Саатына</div>
+            <div class="font-display text-xl font-bold text-brand-700 mt-1">120 сом</div>
+          </div>
+          <div class="bg-brand-50 rounded-xl p-3">
+            <div class="text-[10px] uppercase tracking-widest text-brand-500 font-semibold">Суткасына</div>
+            <div class="font-display text-xl font-bold text-brand-700 mt-1">1400 сом</div>
+          </div>
+        </div>
+        <a href="#booking" class="mt-5 inline-flex items-center justify-center w-full bg-brand-500 hover:bg-brand-600 text-white py-3 rounded-full font-semibold transition">
+          <i class="fa-solid fa-check mr-2"></i> Тандалуу жана бронь
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="py-20 sm:py-28 bg-brand-800 text-white relative overflow-hidden">
+  <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-600/30 blur-3xl"></div>
+  <div class="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-earth-500/20 blur-3xl"></div>
+
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 relative">
+    <div class="text-center mb-14 reveal">
+      <span class="text-earth-300 uppercase tracking-[0.25em] text-xs font-semibold">Кызматтар</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold mt-3">Баары бар — колуңуз бош.</h2>
+      <p class="mt-4 max-w-2xl mx-auto text-white/70">Мангалга керектүү бардык шаймандар бар: от, көмүр, шампур, решетка. Сизге — эт жана маанай.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Card -->
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition reveal">
+        <div class="w-14 h-14 rounded-2xl bg-earth-400/20 text-earth-300 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-fire"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mt-4">Мангал</h3>
+        <p class="text-white/70 mt-2 text-sm">Шашлык үчүн бардык шаймандар даяр. От, көмүр, шампур, решетка — баары бар.</p>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition reveal">
+        <div class="w-14 h-14 rounded-2xl bg-earth-400/20 text-earth-300 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-volleyball"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mt-4">Волейбол</h3>
+        <p class="text-white/70 mt-2 text-sm">Топ жана сетка бар. Досторуңуз менен ойноп ырахат алыңыз.</p>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition reveal">
+        <div class="w-14 h-14 rounded-2xl bg-earth-400/20 text-earth-300 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-kitchen-set"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mt-4">Кухня</h3>
+        <p class="text-white/70 mt-2 text-sm">Өз азыктарыңызды алып келип жасай аласыз, же бизге тапшырсаңыз — жасап беребиз.</p>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition reveal">
+        <div class="w-14 h-14 rounded-2xl bg-earth-400/20 text-earth-300 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-wifi"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mt-4">WiFi</h3>
+        <p class="text-white/70 mt-2 text-sm">Интернет жок, бирок WiFi бар — сатып алып колдоносуз. Тынчтыкты бузбаңыз!</p>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition reveal">
+        <div class="w-14 h-14 rounded-2xl bg-earth-400/20 text-earth-300 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-shower"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mt-4">Жуунуучу жай</h3>
+        <p class="text-white/70 mt-2 text-sm">Жылуу суу менен жуунуу бөлмөсү бар.</p>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition reveal">
+        <div class="w-14 h-14 rounded-2xl bg-earth-400/20 text-earth-300 flex items-center justify-center text-2xl">
+          <i class="fa-solid fa-utensils"></i>
+        </div>
+        <h3 class="font-display text-xl font-bold mt-4">Тамак буюртма</h3>
+        <p class="text-white/70 mt-2 text-sm">Алдын ала тамак буюртма кылыңыз — жеткенде даяр болот.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATERFALL -->
+<section id="waterfall" class="py-20 sm:py-28 bg-earth-50 pattern">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
+    <div class="order-2 lg:order-1 reveal">
+      <div class="aspect-square rounded-[2rem] overflow-hidden shadow-2xl">
+        <img src="https://images.unsplash.com/photo-1432405972618-c6b0cfba8428?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover" alt="Шаркыратма">
+      </div>
+    </div>
+    <div class="order-1 lg:order-2 reveal">
+      <span class="text-brand-500 uppercase tracking-[0.25em] text-xs font-semibold">Жаңылыктар</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-brand-800 mt-3 leading-tight">Жакында жайгашкан <span class="grad-text">шаркыратма</span></h2>
+      <p class="mt-5 text-brand-800/80 leading-relaxed">
+        Эс алуу жайынан 10 мүнөт жөө басканда укмуштуу шаркыратма бар. Токой аркылуу кичинекей жол сизди түздөн-түз алып барат. Таң эрте же күн батканда өзгөчө кооз!
+      </p>
+      <ul class="mt-6 space-y-3">
+        <li class="flex items-start gap-3"><i class="fa-solid fa-route text-brand-500 mt-1"></i><span class="text-brand-800/80">10 мүнөт жөө жол — жеңил маршрут</span></li>
+        <li class="flex items-start gap-3"><i class="fa-solid fa-camera text-brand-500 mt-1"></i><span class="text-brand-800/80">Сүрөткө тартууга эң сонун жер</span></li>
+        <li class="flex items-start gap-3"><i class="fa-solid fa-droplet text-brand-500 mt-1"></i><span class="text-brand-800/80">Муздак тоо суусунан ичип көрүңүз</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-20 sm:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6">
+    <div class="text-center mb-12 reveal">
+      <span class="text-brand-500 uppercase tracking-[0.25em] text-xs font-semibold">Нукура азыктар</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-brand-800 mt-3">Жергиликтүү, таза, кошулмасыз.</h2>
+      <p class="mt-4 max-w-2xl mx-auto text-brand-700/80">Баарын айылдан алып келебиз. Таза абанын даамын сезиңиз.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="py-20 sm:py-28 bg-earth-50 pattern">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-12 reveal">
+      <div>
+        <span class="text-brand-500 uppercase tracking-[0.25em] text-xs font-semibold">Галерея</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-bold text-brand-800 mt-3">Атмосфера.</h2>
+      </div>
+      <a href="https://instagram.com" target="_blank" class="text-brand-600 hover:text-brand-700 font-semibold">
+        <i class="fa-brands fa-instagram mr-2"></i> Instagram'да көбүрөөк
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1533575770077-052fa2c609fc?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+      <div class="aspect-square rounded-2xl overflow-hidden reveal card-hover"><img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking" class="py-20 sm:py-28 bg-brand-800 text-white relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-earth-500/20 blur-3xl"></div>
+
+  <div class="max-w-5xl mx-auto px-5 sm:px-6 relative">
+    <div class="text-center mb-10 reveal">
+      <span class="text-earth-300 uppercase tracking-[0.25em] text-xs font-semibold">Бронь</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold mt-3">Эс алууңузду пландаңыз.</h2>
+      <p class="mt-4 max-w-xl mx-auto text-white/70">Каалагандарыңызды тандап, «Отправить» басыңыз. WhatsApp'ка автоматтык түрдө жиберилет.</p>
+    </div>
+
+    <form id="bookingForm" class="bg-white/5 border border-white/10 rounded-3xl p-5 sm:p-8 backdrop-blur-sm reveal">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="text-xs uppercase tracking-widest text-earth-300 font-semibold">Атыңыз</label>
+          <input type="text" id="fName" required placeholder="Мисалы: Азамат" class="mt-2 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-earth-400">
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-widest text-earth-300 font-semibold">Телефон</label>
+          <input type="tel" id="fPhone" required placeholder="+996" class="mt-2 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-earth-400">
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-widest text-earth-300 font-semibold">Келүү күнү</label>
+          <input type="date" id="fDate" required class="mt-2 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-earth-400">
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-widest text-earth-300 font-semibold">Мөөнөтү</label>
+          <select id="fPeriod" class="mt-2 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-earth-400">
+            <option value="hour" class="text-brand-900">Саат менен</option>
+            <option value="day" selected class="text-brand-900">Сутка менен</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Selections -->
+      <div class="mt-7">
+        <div class="text-xs uppercase tracking-widest text-earth-300 font-semibold mb-3">1. Боз үй тандаңыз</div>
+        <div id="selYurts" class="grid sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <div class="mt-6">
+        <div class="text-xs uppercase tracking-widest text-earth-300 font-semibold mb-3">2. Топчан</div>
+        <div id="selTopchan" class="grid sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <div class="mt-6">
+        <div class="text-xs uppercase tracking-widest text-earth-300 font-semibold mb-3">3. Кошумча</div>
+        <div id="selExtras" class="grid sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <div class="mt-6">
+        <div class="text-xs uppercase tracking-widest text-earth-300 font-semibold mb-3">4. Азыктар (саны)</div>
+        <div id="selProducts" class="grid sm:grid-cols-2 gap-3"></div>
+      </div>
+
+      <div class="mt-8">
+        <label class="text-xs uppercase tracking-widest text-earth-300 font-semibold">Кошумча каалоо</label>
+        <textarea id="fNote" rows="3" placeholder="Мисалы: эт алгын келет..." class="mt-2 w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-earth-400"></textarea>
+      </div>
+
+      <!-- Summary -->
+      <div class="mt-8 bg-white/10 rounded-2xl p-5 border border-white/10">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xs uppercase tracking-widest text-earth-300">Тандалганы</div>
+            <div id="summaryCount" class="font-display text-2xl font-bold mt-1">0 позиция</div>
+          </div>
+          <button type="submit" class="bg-earth-300 hover:bg-earth-400 text-brand-900 font-bold px-6 sm:px-8 py-4 rounded-full shadow-lg transition flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-xl"></i> Отправить
+          </button>
+        </div>
+      </div>
+
+      <p class="text-xs text-white/50 mt-4 text-center">Басып, WhatsApp'та жөнөтүңүз. Жоопту тез беребиз.</p>
+    </form>
+  </div>
+</section>
+
+<!-- CONTACT / SOCIAL -->
+<section id="contact" class="py-16 sm:py-20 bg-earth-50">
+  <div class="max-w-5xl mx-auto px-5 sm:px-6 text-center reveal">
+    <span class="text-brand-500 uppercase tracking-[0.25em] text-xs font-semibold">Байланыш</span>
+    <h2 class="font-display text-4xl sm:text-5xl font-bold text-brand-800 mt-3">Толук маалымат соц. тармактарда.</h2>
+    <p class="mt-4 text-brand-700/80">Сурооңузду Instagram же WhatsApp аркылуу жибериңиз — бата жооп беребиз.</p>
+
+    <div class="grid sm:grid-cols-2 gap-5 mt-10 max-w-2xl mx-auto">
+      <a href="https://instagram.com" target="_blank" class="bg-gradient-to-br from-pink-500 via-purple-500 to-orange-400 text-white rounded-3xl p-6 shadow-xl hover:scale-[1.02] transition">
+        <i class="fa-brands fa-instagram text-4xl"></i>
+        <div class="font-display text-2xl font-bold mt-3">Instagram</div>
+        <div class="text-white/80 text-sm mt-1">@kok_jailoo</div>
+      </a>
+      <a href="https://wa.me/996555000000" target="_blank" class="bg-[#25D366] text-white rounded-3xl p-6 shadow-xl hover:scale-[1.02] transition">
+        <i class="fa-brands fa-whatsapp text-4xl"></i>
+        <div class="font-display text-2xl font-bold mt-3">WhatsApp</div>
+        <div class="text-white/90 text-sm mt-1">+996 555 000 000</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-brand-900 text-white/70 py-10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 grid sm:grid-cols-3 gap-8">
+    <div>
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-700 flex items-center justify-center text-white">
+          <i class="fa-solid fa-mountain-sun"></i>
+        </div>
+        <div>
+          <div class="font-display font-bold text-white">Көк-Жайлоо</div>
+          <div class="text-[10px] tracking-widest uppercase text-brand-300 -mt-1">Эс алуу жайы</div>
+        </div>
+      </div>
+      <p class="mt-4 text-sm">Тоонун арасындагы тынчтык. Сизди күтөбүз.</p>
+    </div>
+    <div>
+      <div class="text-white font-semibold mb-3">Тез шилтемелер</div>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#yurts" class="hover:text-white">Боз үйлөр</a></li>
+        <li><a href="#services" class="hover:text-white">Кызматтар</a></li>
+        <li><a href="#products" class="hover:text-white">Азыктар</a></li>
+        <li><a href="#booking" class="hover:text-white">Бронь</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="text-white font-semibold mb-3">Байланыш</div>
+      <ul class="space-y-2 text-sm">
+        <li><i class="fa-solid fa-location-dot mr-2"></i>Нарын облусу, Көк-Жайлоо</li>
+        <li><i class="fa-solid fa-phone mr-2"></i>+996 555 000 000</li>
+        <li><i class="fa-solid fa-clock mr-2"></i>24/7</li>
+      </ul>
+    </div>
+  </div>
+  <div class="text-center text-xs text-white/40 mt-8">© 2025 Көк-Жайлоо. Бардык укуктар корголгон.</div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/996555000000" target="_blank" class="fab" aria-label="WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+/* ========= DATA ========= */
+const WHATSAPP_NUMBER = '996555000000';
+
+const yurts = [
+  { id: 'y1', name: 'Боз үй №1 «Ак-Кеме»',  img: 'https://images.unsplash.com/photo-1518235925204-2ecab1f05e4e?auto=format&fit=crop&w=900&q=80', hour: 200, day: 2500, cap: 4, badge: 'Эң популярдуу' },
+  { id: 'y2', name: 'Боз үй №2 «Жашыл-Төр»', img: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80', hour: 200, day: 2500, cap: 4, badge: null },
+  { id: 'y3', name: 'Боз үй №3 «Карагай»',    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80', hour: 250, day: 3000, cap: 6, badge: 'VIP' },
+  { id: 'y4', name: 'Боз үй №4 «Шаркыратма»', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80', hour: 250, day: 3000, cap: 6, badge: 'Көрүнүшү мыкты' },
+  { id: 'y5', name: 'Боз үй №5 «Арча»',       img: 'https://images.unsplash.com/photo-1438109491471-66189978201b?auto=format&fit=crop&w=900&q=80', hour: 200, day: 2500, cap: 4, badge: null },
+  { id: 'y6', name: 'Боз үй №6 «Жайлоо»',     img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80', hour: 200, day: 2500, cap: 4, badge: null },
+  { id: 'y7', name: 'Боз үй №7 «Тунук»',      img: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=80', hour: 180, day: 2200, cap: 3, badge: 'Жылуу' },
+  { id: 'y8', name: 'Боз үй №8 «Ай-Көл»',     img: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=900&q=80', hour: 180, day: 2200, cap: 3, badge: null },
+];
+
+const products = [
+  { id: 'kymyz',     name: 'Кымыз',     unit: '1 л',     price: 250, img: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=500&q=80' },
+  { id: 'ayran',     name: 'Айран',     unit: '1 л',     price: 150, img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=500&q=80' },
+  { id: 'suzmo',     name: 'Сүзмө',     unit: '500 г',   price: 300, img: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=500&q=80' },
+  { id: 'kurut',     name: 'Курут',     unit: '250 г',   price: 200, img: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=500&q=80' },
+  { id: 'bal',       name: 'Бал',       unit: '500 г',   price: 500, img: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=500&q=80' },
+  { id: 'et',        name: 'Тамак буюртма', unit: 'бир жолку', price: 500, img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80' },
+];
+
+const extras = [
+  { id: 'wifi',     name: 'WiFi (1 саат)',     price: 50 },
+  { id: 'wifi-day', name: 'WiFi (суткасына)',  price: 300 },
+  { id: 'mangal',   name: 'Мангал + от + шампур', price: 300 },
+  { id: 'volley',   name: 'Волейбол тобу',     price: 0 },
+];
+
+/* ========= RENDERS ========= */
+// Yurts grid
+const yurtGrid = document.getElementById('yurtGrid');
+yurts.forEach((y, i) => {
+  const div = document.createElement('div');
+  div.className = 'bg-earth-50 rounded-3xl overflow-hidden shadow-md border border-brand-100 card-hover reveal';
+  div.dataset.bookable = 'yurt';
+  div.dataset.id = y.id;
+  div.innerHTML = `
+    <div class="aspect-[16/10] overflow-hidden relative">
+      <img src="${y.img}" alt="${y.name}" class="w-full h-full object-cover hover:scale-105 transition duration-700">
+      ${y.badge ? `<span class="absolute top-3 left-3 bg-brand-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow">${y.badge}</span>` : ''}
+      <span class="absolute top-3 right-3 bg-white/90 text-brand-800 text-xs px-3 py-1 rounded-full font-semibold shadow"><i class="fa-solid fa-user-group mr-1"></i>${y.cap} адам</span>
+    </div>
+    <div class="p-6">
+      <h3 class="font-display text-2xl font-bold text-brand-800">${y.name}</h3>
+      <p class="text-brand-700/70 mt-1 text-sm">Жекеме-жеке коюлган. Төшөк, жууркан, жарык бар.</p>
+      <div class="grid grid-cols-2 gap-3 mt-5">
+        <div class="bg-white rounded-xl p-3 border border-brand-100">
+          <div class="text-[10px] uppercase tracking-widest text-brand-500 font-semibold">Саатына</div>
+          <div class="font-display text-xl font-bold text-brand-700 mt-1">${y.hour} сом</div>
+        </div>
+        <div class="bg-white rounded-xl p-3 border border-brand-100">
+          <div class="text-[10px] uppercase tracking-widest text-brand-500 font-semibold">Суткасына</div>
+          <div class="font-display text-xl font-bold text-brand-700 mt-1">${y.day} сом</div>
+        </div>
+      </div>
+      <a href="#booking" class="mt-5 inline-flex items-center justify-center w-full bg-brand-500 hover:bg-brand-600 text-white py-3 rounded-full font-semibold transition">
+        <i class="fa-solid fa-check mr-2"></i> Тандалуу жана бронь
+      </a>
+    </div>
+  `;
+  yurtGrid.appendChild(div);
+});
+
+// Products grid
+const productGrid = document.getElementById('productGrid');
+products.forEach(p => {
+  const div = document.createElement('div');
+  div.className = 'bg-earth-50 rounded-2xl overflow-hidden border border-brand-100 card-hover reveal';
+  div.innerHTML = `
+    <div class="aspect-[4/3] overflow-hidden">
+      <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover">
+    </div>
+    <div class="p-4 flex items-center justify-between gap-3">
+      <div>
+        <div class="font-display font-bold text-brand-800">${p.name}</div>
+        <div class="text-xs text-brand-500">${p.unit} · нукура</div>
+      </div>
+      <div class="text-right">
+        <div class="font-display text-xl font-bold text-brand-600">${p.price}</div>
+        <div class="text-[10px] uppercase tracking-widest text-brand-500">сом</div>
+      </div>
+    </div>
+  `;
+  productGrid.appendChild(div);
+});
+
+/* ========= BOOKING SELECTIONS ========= */
+const selYurts = document.getElementById('selYurts');
+const selTopchan = document.getElementById('selTopchan');
+const selExtras = document.getElementById('selExtras');
+const selProducts = document.getElementById('selProducts');
+const summaryCount = document.getElementById('summaryCount');
+
+function makeSelCard({ id, label, sub, price, type, qty = false }) {
+  const card = document.createElement('label');
+  card.className = 'sel-card cursor-pointer bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-between gap-3 hover:bg-white/10';
+  card.dataset.id = id;
+  card.dataset.type = type;
+  card.dataset.label = label;
+  card.dataset.price = price;
+  card.innerHTML = `
+    <div class="flex items-center gap-3">
+      <span class="sel-dot w-5 h-5 rounded-full border-2 border-white/40 flex items-center justify-center text-xs"> </span>
+      <div>
+        <div class="font-semibold text-sm">${label}</div>
+        <div class="text-xs text-white/60">${sub}</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      ${qty ? `
+        <div class="qty-ctl hidden items-center gap-1">
+          <button type="button" class="qty-minus w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white">−</button>
+          <span class="qty-val w-6 text-center text-sm font-bold">0</span>
+          <button type="button" class="qty-plus w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white">+</button>
+        </div>
+      ` : ''}
+      <div class="text-sm font-semibold">${price > 0 ? price + ' сом' : 'Бекер'}</div>
+    </div>
+  `;
+  card.addEventListener('click', (e) => {
+    if (e.target.classList.contains('qty-plus') || e.target.classList.contains('qty-minus')) return;
+    card.classList.toggle('selected');
+    const dot = card.querySelector('.sel-dot');
+    if (card.classList.contains('selected')) {
+      dot.innerHTML = '<i class="fa-solid fa-check"></i>';
+      dot.classList.add('bg-brand-500', 'border-brand-500', 'text-white');
+    } else {
+      dot.innerHTML = ' ';
+      dot.classList.remove('bg-brand-500', 'border-brand-500', 'text-white');
+    }
+    const qtyC = card.querySelector('.qty-ctl');
+    if (qtyC) qtyC.classList.toggle('hidden', !card.classList.contains('selected'));
+    updateSummary();
+  });
+  if (qty) {
+    const plus = card.querySelector('.qty-plus');
+    const minus = card.querySelector('.qty-minus');
+    const val = card.querySelector('.qty-val');
+    plus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      val.textContent = (parseInt(val.textContent) || 0) + 1;
+      updateSummary();
+    });
+    minus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      val.textContent = Math.max(0, (parseInt(val.textContent) || 0) - 1);
+      updateSummary();
+    });
+  }
+  return card;
+}
+
+// Populate yurt selectors
+yurts.forEach(y => {
+  selYurts.appendChild(makeSelCard({
+    id: y.id,
+    label: y.name,
+    sub: `${y.cap} адам · жекеме-жеке`,
+    price: `200 / 2500`,
+    type: 'yurt'
+  }));
+});
+
+// Topchan
+document.querySelectorAll('[data-bookable="topchan"]').forEach(t => {
+  const name = t.dataset.name;
+  const ph = t.dataset.priceHour;
+  const pd = t.dataset.priceDay;
+  selTopchan.appendChild(makeSelCard({
+    id: t.dataset.name,
+    label: name,
+    sub: `Саатына ${ph} / Суткасына ${pd} сом`,
+    price: `${ph} / ${pd}`,
+    type: 'topchan'
+  }));
+});
+
+// Extras
+extras.forEach(e => {
+  selExtras.appendChild(makeSelCard({
+    id: e.id,
+    label: e.name,
+    sub: e.price > 0 ? `${e.price} сом` : 'Бекер',
+    price: e.price,
+    type: 'extras'
+  }));
+});
+
+// Products (with qty)
+products.forEach(p => {
+  selProducts.appendChild(makeSelCard({
+    id: p.id,
+    label: p.name,
+    sub: `${p.unit} · ${p.price} сом`,
+    price: p.price,
+    type: 'product',
+    qty: true
+  }));
+});
+
+function updateSummary() {
+  const selected = document.querySelectorAll('.sel-card.selected').length;
+  const qtyItems = document.querySelectorAll('.qty-val');
+  let qtySum = 0;
+  qtyItems.forEach(v => qtySum += parseInt(v.textContent) || 0);
+  summaryCount.textContent = `${selected + qtySum} позиция`;
+}
+
+/* ========= FORM SUBMIT ========= */
+document.getElementById('bookingForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('fName').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const date = document.getElementById('fDate').value;
+  const period = document.getElementById('fPeriod').value;
+  const note = document.getElementById('fNote').value.trim();
+  const periodText = period === 'hour' ? 'саат менен' : 'сутка менен';
+
+  let chosen = [];
+  document.querySelectorAll('.sel-card.selected').forEach(c => {
+    const type = c.dataset.type;
+    const label = c.dataset.label;
+    const qtyEl = c.querySelector('.qty-val');
+    if (qtyEl) {
+      const q = parseInt(qtyEl.textContent) || 0;
+      if (q > 0) chosen.push(`• ${label} — ${q} ${type === 'product' ? 'даана' : 'даана'}`);
+    } else {
+      chosen.push(`• ${label}`);
+    }
+  });
+
+  let text = `🏔 *КӨК-ЖАЙЛОО — ЖАҢЫ БРОНЬ*\n\n`;
+  text += `👤 *Аты:* ${name}\n`;
+  text += `📞 *Телефон:* ${phone}\n`;
+  text += `📅 *Күнү:* ${date}\n`;
+  text += `⏳ *Мөөнөтү:* ${periodText}\n\n`;
+  text += `📋 *Тандалгандар:*\n${chosen.length ? chosen.join('\n') : '• (эч нерсе тандалган жок)'}\n\n`;
+  if (note) text += `💬 *Каалоо:* ${note}\n\n`;
+  text += `Рахмат! Тез арада жооп бериңиз 🙏`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+});
+
+/* ========= SLIDER ========= */
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.slide-dot');
+let cur = 0;
+function goTo(i) {
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('active', 'bg-white/80');
+  dots[cur].classList.add('bg-white/40');
+  cur = (i + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('active', 'bg-white/80');
+  dots[cur].classList.remove('bg-white/40');
+}
+dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.i))));
+setInterval(() => goTo(cur + 1), 6000);
+
+/* ========= MOBILE NAV ========= */
+const burger = document.getElementById('burger');
+const mobileNav = document.getElementById('mobileNav');
+burger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+/* ========= REVEAL ON SCROLL ========= */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      en.target.classList.add('visible');
+      io.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
